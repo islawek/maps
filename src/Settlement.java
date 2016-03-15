@@ -1,13 +1,13 @@
-import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
+
 
 /**
- * Represents a road that is linked to two settlements: source and destination.
- * @author Chris Loftus
- * @version 1.0 (20th February 2016)
+ * Represents a settlement with a name, population, type and
+ * with connected roads.
+ * @author Izabela Slawek
+ * @version 1.0 (14th March 2016)
  */
+
 public class Settlement {
 	private String name;
 	private int population;
@@ -36,8 +36,7 @@ public class Settlement {
 	}
 
 	/**
-	 * The name of the settlement. Note that there is no way to change
-	 * the name once created.
+	 * The name of the settlement.
 	 * @return The name of the settlement. 
 	 */
 	public String getName() {
@@ -78,29 +77,15 @@ public class Settlement {
 	
 	/**
 	 * Add a new road to the settlement. 
+	 * Report an error if the road is already connected to the settlement
 	 * @param road The new road to add. 
-	 * @throws IllegalArgumentException if the settlement already contains the road 
 	 */
-	public void add(Road road) throws IllegalArgumentException {
+	public void add(Road road){
 		if(!roads.contains(road)){
 			roads.add(road);
 		}else{
-			System.out.println("road already exists");
+			System.out.println("Road already exists");
 		}
-	}
-	
-	/**
-	 * Returns a ArrayList of Roads that match the given name
-	 * @param name The name of the road to find
-	 * @return An ArrayList of Road objects (will be a maximum of two
-	 * items for any settlements: e.g. A487 goes from Aber to
-	 * Penparcau and from Aber to Bow Street
-	 */
-	public ArrayList<Road> findRoads(String name){
-		ArrayList<Road> roadsFound = new ArrayList<>();
-		
-		// INSERT CODE HERE
-		return roadsFound;
 	}
 	
 	/**
@@ -123,37 +108,21 @@ public class Settlement {
 	}
 	
 	/**
-	 * Deletes the given road attached to this settlement. It will
-	 * also detach this road from the settlements at the other end
-	 * of the road 
+	 * Deletes the given road attached to this settlement. 
 	 * @param road The road to delete.
-	 * @throws  IllegalArgumentException is thrown if the Road is not connected
-	 * to this settlement
 	 */
-	public void delete(Road road) throws IllegalArgumentException{
+	public void delete(Road road){
 		if(roads.contains(road)){
 			roads.remove(road);
 		}else{
 			System.out.println("Road doesn't exist");
 		}
 	}
-	/**
-	 * Returns a list of all the roads connected to this settlement
-	 * @return The roads attached to this settlement
-	 */
-	public ArrayList<Road> getAllRoads() {
-		// Notice how we create a separate array list object
-		// and return that instead of the roads. This is so
-		// that we don't break encapsulation and data hiding.
-		// If I returned roads, then the calling code could change
-		// change it directly which would be dangerous
-		ArrayList<Road> result = new ArrayList<>();
-		for(Road rd: roads){
-			result.add(rd);
-		}
-		return result;
-	}
 
+	/**
+	 * New equals method
+	 * Compare name and classification of the settlement
+	 */
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -172,10 +141,11 @@ public class Settlement {
 	}
 
 	/**
-	 * The state of the settlement including information about
-	 * connected roads
-	 * @return The data in the settlement object.
+	 * Human readable representation of the settlement
+	 * Show the name, classification, population and connected roads
+	 * @return String representation of the settlement
 	 */
+	@Override
 	public String toString() {
 		String result = " Settlement name: "+ name + "\n Population: " + population + "\n Kind: " + kind.toString() + "\n Roads: \n";
 		for(Road road : roads){
